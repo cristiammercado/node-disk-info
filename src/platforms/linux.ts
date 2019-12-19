@@ -26,17 +26,15 @@ export class Linux {
                 const line: string = value.replace(/ +(?= )/g, '');
                 const tokens = line.split(' ');
 
-                const d = Drive.builder()
-                    .filesystem(tokens[0])
-                    .blocks(isNaN(parseFloat(tokens[1])) ? +tokens[1] : 0)
-                    .used(isNaN(parseFloat(tokens[2])) ? +tokens[2] : 0)
-                    .available(isNaN(parseFloat(tokens[3])) ? +tokens[3] : 0)
-                    .capacity(tokens[4])
-                    .mounted(tokens[5])
-                    .build();
+                const d = new Drive(
+                    tokens[0],
+                    isNaN(parseFloat(tokens[1])) ? 0 : +tokens[1],
+                    isNaN(parseFloat(tokens[2])) ? 0 : +tokens[2],
+                    isNaN(parseFloat(tokens[3])) ? 0 : +tokens[3],
+                    tokens[4],
+                    tokens[5]);
 
                 drives.push(d);
-
             }
 
         });

@@ -24,7 +24,7 @@ var Windows = /** @class */ (function () {
         var newDiskIteration = false;
         var caption = '';
         var description = '';
-        var fresSpace = 0;
+        var freeSpace = 0;
         var size = 0;
         lines.forEach(function (value) {
             if (value !== '') {
@@ -40,32 +40,26 @@ var Windows = /** @class */ (function () {
                         description = data;
                         break;
                     case 'FreeSpace':
-                        fresSpace = isNaN(parseFloat(data)) ? +data : 0;
+                        freeSpace = isNaN(parseFloat(data)) ? 0 : +data;
                         break;
                     case 'Size':
-                        size = isNaN(parseFloat(data)) ? +data : 0;
+                        size = isNaN(parseFloat(data)) ? 0 : +data;
                         break;
                 }
             }
             else {
                 if (newDiskIteration) {
-                    var used = (size - fresSpace);
+                    var used = (size - freeSpace);
                     var percent = '0%';
                     if (size > 0) {
                         percent = Math.round((used / size) * 100) + '%';
                     }
-                    var d = drive_1.default.builder()
-                        .filesystem(description)
-                        .blocks(size)
-                        .used(used)
-                        .available(fresSpace)
-                        .capacity(percent)
-                        .mounted(caption)
-                        .build();
+                    var d = new drive_1.default(description, size, used, freeSpace, percent, caption);
                     drives.push(d);
+                    newDiskIteration = false;
                     caption = '';
                     description = '';
-                    fresSpace = 0;
+                    freeSpace = 0;
                     size = 0;
                 }
             }

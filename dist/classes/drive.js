@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var drive_builder_1 = require("./drive-builder");
 /**
  * Class with drive information.
  *
@@ -18,45 +17,85 @@ var Drive = /** @class */ (function () {
      * @param {string} mounted Indicates the mount point of the disk.
      */
     function Drive(filesystem, blocks, used, available, capacity, mounted) {
-        this.filesystem = filesystem;
-        this.blocks = blocks;
-        this.used = used;
-        this.available = available;
-        this.capacity = capacity;
-        this.mounted = mounted;
+        this._filesystem = filesystem;
+        this._blocks = blocks;
+        this._used = used;
+        this._available = available;
+        this._capacity = capacity;
+        this._mounted = mounted;
     }
-    /**
-     * Creates a new class instance from JSON.
-     *
-     * @param {IDriveJson} json JSON drive data.
-     * @return {Drive} Drive class instance.
-     */
-    Drive.fromJSON = function (json) {
-        return new Drive(json.filesystem, json.blocks, json.used, json.available, json.capacity, json.mounted);
-    };
-    /**
-     * Builder to generate a instance of Drive class.
-     *
-     * @param {Drive} drive Drive instance to copy of.
-     */
-    Drive.builder = function (drive) {
-        return new drive_builder_1.DriveBuilder(drive);
-    };
-    /**
-     * Generates JSON of this class.
-     *
-     * @return {object} A JSON object.
-     */
-    Drive.prototype.toJSON = function () {
-        return {
-            available: this.available,
-            blocks: this.blocks,
-            capacity: this.capacity,
-            filesystem: this.filesystem,
-            mounted: this.mounted,
-            used: this.used,
-        };
-    };
+    Object.defineProperty(Drive.prototype, "filesystem", {
+        /**
+         * Drive filesystem.
+         *
+         * @return Gets drive filesystem.
+         */
+        get: function () {
+            return this._filesystem;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Drive.prototype, "blocks", {
+        /**
+         * Blocks associated to disk.
+         *
+         * @return Gets blocks associated to disk.
+         */
+        get: function () {
+            return this._blocks;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Drive.prototype, "used", {
+        /**
+         * Used disk space.
+         *
+         * @return Gets used disk space.
+         */
+        get: function () {
+            return this._used;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Drive.prototype, "available", {
+        /**
+         * Available disk space.
+         *
+         * @return Gets available disk space.
+         */
+        get: function () {
+            return this._available;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Drive.prototype, "capacity", {
+        /**
+         * Disk capacity.
+         *
+         * @return Gets disk capacity.
+         */
+        get: function () {
+            return this._capacity;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Drive.prototype, "mounted", {
+        /**
+         * Indicates the mount point of the disk.
+         *
+         * @return Gets the mount point of the disk.
+         */
+        get: function () {
+            return this._mounted;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Drive;
 }());
 exports.default = Drive;
