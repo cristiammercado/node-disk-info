@@ -1,5 +1,3 @@
-import { DriveBuilder } from './drive-builder';
-import { IDriveJson } from './drive-json';
 /**
  * Class with drive information.
  *
@@ -7,42 +5,29 @@ import { IDriveJson } from './drive-json';
  */
 export default class Drive {
     /**
-     * Creates a new class instance from JSON.
-     *
-     * @param {IDriveJson} json JSON drive data.
-     * @return {Drive} Drive class instance.
-     */
-    static fromJSON(json: IDriveJson): Drive;
-    /**
-     * Builder to generate a instance of Drive class.
-     *
-     * @param {Drive} drive Drive instance to copy of.
-     */
-    static builder(drive?: Drive): DriveBuilder;
-    /**
      * Drive filesystem.
      */
-    readonly filesystem: string;
+    private readonly _filesystem;
     /**
      * Blocks associated to disk.
      */
-    readonly blocks: number;
+    private readonly _blocks;
     /**
      * Used disk space.
      */
-    readonly used: number;
+    private readonly _used;
     /**
      * Available disk space.
      */
-    readonly available: number;
+    private readonly _available;
     /**
      * Disk capacity.
      */
-    readonly capacity: string;
+    private readonly _capacity;
     /**
      * Indicates the mount point of the disk.
      */
-    readonly mounted: string;
+    private readonly _mounted;
     /**
      * Constructor for Drive class.
      *
@@ -53,11 +38,41 @@ export default class Drive {
      * @param {string} capacity Disk capacity.
      * @param {string} mounted Indicates the mount point of the disk.
      */
-    private constructor();
+    constructor(filesystem: string, blocks: number, used: number, available: number, capacity: string, mounted: string);
     /**
-     * Generates JSON of this class.
+     * Drive filesystem.
      *
-     * @return {object} A JSON object.
+     * @return Gets drive filesystem.
      */
-    toJSON(): IDriveJson;
+    get filesystem(): string;
+    /**
+     * Blocks associated to disk.
+     *
+     * @return Gets blocks associated to disk.
+     */
+    get blocks(): number;
+    /**
+     * Used disk space.
+     *
+     * @return Gets used disk space.
+     */
+    get used(): number;
+    /**
+     * Available disk space.
+     *
+     * @return Gets available disk space.
+     */
+    get available(): number;
+    /**
+     * Disk capacity.
+     *
+     * @return Gets disk capacity.
+     */
+    get capacity(): string;
+    /**
+     * Indicates the mount point of the disk.
+     *
+     * @return Gets the mount point of the disk.
+     */
+    get mounted(): string;
 }

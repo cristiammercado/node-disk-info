@@ -1,6 +1,3 @@
-import {DriveBuilder} from './drive-builder';
-import {IDriveJson} from './drive-json';
-
 /**
  * Class with drive information.
  *
@@ -9,53 +6,34 @@ import {IDriveJson} from './drive-json';
 export default class Drive {
 
     /**
-     * Creates a new class instance from JSON.
-     *
-     * @param {IDriveJson} json JSON drive data.
-     * @return {Drive} Drive class instance.
-     */
-    public static fromJSON(json: IDriveJson): Drive {
-        return new Drive(json.filesystem, json.blocks, json.used, json.available, json.capacity, json.mounted);
-    }
-
-    /**
-     * Builder to generate a instance of Drive class.
-     *
-     * @param {Drive} drive Drive instance to copy of.
-     */
-    public static builder(drive?: Drive): DriveBuilder {
-        return new DriveBuilder(drive);
-    }
-
-    /**
      * Drive filesystem.
      */
-    public readonly filesystem: string;
+    private readonly _filesystem: string;
 
     /**
      * Blocks associated to disk.
      */
-    public readonly blocks: number;
+    private readonly _blocks: number;
 
     /**
      * Used disk space.
      */
-    public readonly used: number;
+    private readonly _used: number;
 
     /**
      * Available disk space.
      */
-    public readonly available: number;
+    private readonly _available: number;
 
     /**
      * Disk capacity.
      */
-    public readonly capacity: string;
+    private readonly _capacity: string;
 
     /**
      * Indicates the mount point of the disk.
      */
-    public readonly mounted: string;
+    private readonly _mounted: string;
 
     /**
      * Constructor for Drive class.
@@ -67,29 +45,66 @@ export default class Drive {
      * @param {string} capacity Disk capacity.
      * @param {string} mounted Indicates the mount point of the disk.
      */
-    private constructor(filesystem: string, blocks: number, used: number, available: number, capacity: string, mounted: string) {
-        this.filesystem = filesystem;
-        this.blocks = blocks;
-        this.used = used;
-        this.available = available;
-        this.capacity = capacity;
-        this.mounted = mounted;
+    public constructor(filesystem: string, blocks: number, used: number, available: number, capacity: string, mounted: string) {
+        this._filesystem = filesystem;
+        this._blocks = blocks;
+        this._used = used;
+        this._available = available;
+        this._capacity = capacity;
+        this._mounted = mounted;
     }
 
     /**
-     * Generates JSON of this class.
+     * Drive filesystem.
      *
-     * @return {object} A JSON object.
+     * @return Gets drive filesystem.
      */
-    public toJSON(): IDriveJson {
+    get filesystem(): string {
+        return this._filesystem;
+    }
 
-        return {
-            available: this.available,
-            blocks: this.blocks,
-            capacity: this.capacity,
-            filesystem: this.filesystem,
-            mounted: this.mounted,
-            used: this.used,
-        };
+    /**
+     * Blocks associated to disk.
+     *
+     * @return Gets blocks associated to disk.
+     */
+    get blocks(): number {
+        return this._blocks;
+    }
+
+    /**
+     * Used disk space.
+     *
+     * @return Gets used disk space.
+     */
+    get used(): number {
+        return this._used;
+    }
+
+    /**
+     * Available disk space.
+     *
+     * @return Gets available disk space.
+     */
+    get available(): number {
+        return this._available;
+    }
+
+    /**
+     * Disk capacity.
+     *
+     * @return Gets disk capacity.
+     */
+    get capacity(): string {
+        return this._capacity;
+    }
+
+    /**
+     * Indicates the mount point of the disk.
+     *
+     * @return Gets the mount point of the disk.
+     */
+    get mounted(): string {
+        return this._mounted;
     }
 }

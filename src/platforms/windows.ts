@@ -23,7 +23,7 @@ export class Windows {
 
         let caption: string = '';
         let description: string = '';
-        let fresSpace: number = 0;
+        let freeSpace: number = 0;
         let size: number = 0;
 
         lines.forEach((value) => {
@@ -43,10 +43,10 @@ export class Windows {
                         description = data;
                         break;
                     case 'FreeSpace':
-                        fresSpace = isNaN(parseFloat(data)) ? +data : 0;
+                        freeSpace = isNaN(parseFloat(data)) ? 0 : +data;
                         break;
                     case 'Size':
-                        size = isNaN(parseFloat(data)) ? +data : 0;
+                        size = isNaN(parseFloat(data)) ? 0 : +data;
                         break;
                 }
 
@@ -54,7 +54,7 @@ export class Windows {
 
                 if (newDiskIteration) {
 
-                    const used: number = (size - fresSpace);
+                    const used: number = (size - freeSpace);
 
                     let percent = '0%';
 
@@ -62,20 +62,20 @@ export class Windows {
                         percent = Math.round((used / size) * 100) + '%';
                     }
 
-                    const d = Drive.builder()
-                        .filesystem(description)
-                        .blocks(size)
-                        .used(used)
-                        .available(fresSpace)
-                        .capacity(percent)
-                        .mounted(caption)
-                        .build();
+                    const d = new Drive(
+                        description,
+                        size,
+                        used,
+                        freeSpace,
+                        percent,
+                        caption);
 
                     drives.push(d);
 
+                    newDiskIteration = false;
                     caption = '';
                     description = '';
-                    fresSpace = 0;
+                    freeSpace = 0;
                     size = 0;
                 }
 

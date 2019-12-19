@@ -10,45 +10,7 @@ Node module to get disk information in Windows, Linux & Mac. It works with Elect
 
 ## Usage
 
-Import it and just call the main function:
-
-```javascript
-const nodeDiskInfo = require('node-disk-info');
-
-// async mode
-nodeDiskInfo.getDiskInfo().then(disks => {
-
-        for (const disk of disks) {
-            console.log('Filesystem:', disk.filesystem);
-            console.log('Blocks:', disk.blocks);
-            console.log('Used:', disk.used);
-            console.log('Available:', disk.available);
-            console.log('Capacity:', disk.capacity);
-            console.log('Mounted:', disk.mounted);
-            console.log('\n');
-        }
-
-    }).catch(reason => {
-        console.error(reason);
-    });
-
-// sync mode
-try {
-    const disks = nodeDiskInfo.getDiskInfoSync();
-
-    for (const disk of disks) {
-        console.log('Filesystem:', disk.filesystem);
-        console.log('Blocks:', disk.blocks);
-        console.log('Used:', disk.used);
-        console.log('Available:', disk.available);
-        console.log('Capacity:', disk.capacity);
-        console.log('Mounted:', disk.mounted);
-        console.log('\n');
-    }
-} catch (e) {
-    console.error(e);
-}
-```
+See the [example script](example/index.js) for usage. You can run it with `node example/index.js`.
 
 ## License
 
