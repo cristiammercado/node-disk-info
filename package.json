@@ -1,0 +1,95 @@
+{
+  "name": "node-disk-info",
+  "version": "1.0.0",
+  "description": "Node module to get disk information in Windows, Linux & Mac. It works with Electron.",
+  "company": "S4N",
+  "homepage": "https://github.com/cristiammercado/node-disk-info",
+  "bugs": {
+    "email": "contact@cristiammercado.com",
+    "url": "https://github.com/cristiammercado/node-disk-info/issues"
+  },
+  "keywords": [
+    "disk info",
+    "disk",
+    "disks",
+    "info",
+    "free space",
+    "volumes",
+    "harddisk",
+    "hard drive",
+    "node",
+    "npm",
+    "electron"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Cristiam Mercado",
+    "email": "contact@cristiammercado.com",
+    "url": "https://github.com/cristiammercado"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rimraf ./dist ./coverage",
+    "typecheck": "tsc -p . --noEmit",
+    "lint": "tslint --project tsconfig.json --format stylish",
+    "lint:fix": "tslint --fix --project tsconfig.json",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "prebuild": "npm run clean",
+    "posttest": "npm run typecheck && npm run lint",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
+    "preversion": "npm test",
+    "version": "npm run changelog && git add CHANGELOG.md",
+    "postversion": "git push && git push --tags",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristiammercado/node-disk-info.git"
+  },
+  "dependencies": {},
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "8.2.0",
+    "@commitlint/config-conventional": "8.2.0",
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.17",
+    "conventional-changelog-cli": "2.0.31",
+    "husky": "3.1.0",
+    "jest": "24.9.0",
+    "lint-staged": "9.5.0",
+    "prettier": "1.19.1",
+    "rimraf": "3.0.0",
+    "ts-jest": "24.2.0",
+    "tslint": "5.20.1",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-plugin-prettier": "2.0.1",
+    "typescript": "3.7.3"
+  },
+  "os": [
+    "linux",
+    "win32",
+    "darwin"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": ">= 8"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "post-commit": "git reset",
+      "pre-commit": "lint-staged"
+    }
+  }
+}
