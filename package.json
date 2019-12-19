@@ -1,0 +1,59 @@
+{
+  "name": "node-disk-info",
+  "version": "1.0.0",
+  "description": "Node module to get disk information in Windows, Linux & Mac. It works with Electron.",
+  "homepage": "https://github.com/cristiammercado/node-disk-info",
+  "bugs": {
+    "email": "contact@cristiammercado.com",
+    "url": "https://github.com/cristiammercado/node-disk-info/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "./node_modules/.bin/jasmine-ts --config=jasmine.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristiammercado/node-disk-info.git"
+  },
+  "keywords": [
+    "disk info",
+    "disk",
+    "disks",
+    "info",
+    "free space",
+    "volumes",
+    "harddisk",
+    "hard drive",
+    "node",
+    "npm",
+    "electron"
+  ],
+  "author": {
+    "name": "Cristiam Mercado",
+    "email": "contact@cristiammercado.com",
+    "url": "https://github.com/cristiammercado"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jasmine": "3.5.0",
+    "@types/node": "12.12.21",
+    "jasmine": "3.5.0",
+    "jasmine-core": "3.5.0",
+    "jasmine-ts": "0.3.0",
+    "mem": "6.0.1",
+    "ts-node": "7.0.1",
+    "typescript": "3.7.3",
+    "uuid": "3.3.3"
+  },
+  "os": [
+    "linux",
+    "win32",
+    "darwin"
+  ],
+  "engines": {
+    "node": ">= 8"
+  }
+}
