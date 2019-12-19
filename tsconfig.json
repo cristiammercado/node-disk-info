@@ -9,7 +9,7 @@
       "es2017"
     ],
     "types": [
-      "jest",
+      "jasmine",
       "node"
     ],
     "moduleResolution": "node",

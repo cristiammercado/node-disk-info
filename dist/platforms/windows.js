@@ -1,39 +1,36 @@
-import {execSync} from 'child_process';
-import {Constants} from '../utils/constants';
-
-import Drive from '../classes/drive';
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var child_process_1 = require("child_process");
+var constants_1 = require("../utils/constants");
+var drive_1 = __importDefault(require("../classes/drive"));
 /**
  * Class with Windows specific logic to get disk info.
  */
-export class Windows {
-
+var Windows = /** @class */ (function () {
+    function Windows() {
+    }
     /**
      * Execute specific Windows command to get disk info.
      *
      * @return {Drive[]} List of drives and their info.
      */
-    public static run(): Drive[] {
-
-        const drives: Drive[] = [];
-        const buffer = execSync(Constants.WINDOWS_COMMAND).toString();
-        const lines = buffer.split('\r\r\n');
-
-        let newDiskIteration = false;
-
-        let caption: string = '';
-        let description: string = '';
-        let fresSpace: number = 0;
-        let size: number = 0;
-
-        lines.forEach((value) => {
-
+    Windows.run = function () {
+        var drives = [];
+        var buffer = child_process_1.execSync(constants_1.Constants.WINDOWS_COMMAND).toString();
+        var lines = buffer.split('\r\r\n');
+        var newDiskIteration = false;
+        var caption = '';
+        var description = '';
+        var fresSpace = 0;
+        var size = 0;
+        lines.forEach(function (value) {
             if (value !== '') {
-
-                const tokens = value.split('=');
-                const section = tokens[0];
-                const data = tokens[1];
-
+                var tokens = value.split('=');
+                var section = tokens[0];
+                var data = tokens[1];
                 switch (section) {
                     case 'Caption':
                         caption = data;
@@ -49,20 +46,15 @@ export class Windows {
                         size = isNaN(parseFloat(data)) ? +data : 0;
                         break;
                 }
-
-            } else {
-
+            }
+            else {
                 if (newDiskIteration) {
-
-                    const used: number = (size - fresSpace);
-
-                    let percent = '0%';
-
+                    var used = (size - fresSpace);
+                    var percent = '0%';
                     if (size > 0) {
                         percent = Math.round((used / size) * 100) + '%';
                     }
-
-                    const d = Drive.builder()
+                    var d = drive_1.default.builder()
                         .filesystem(description)
                         .blocks(size)
                         .used(used)
@@ -70,20 +62,16 @@ export class Windows {
                         .capacity(percent)
                         .mounted(caption)
                         .build();
-
                     drives.push(d);
-
                     caption = '';
                     description = '';
                     fresSpace = 0;
                     size = 0;
                 }
-
             }
-
         });
-
         return drives;
-    }
-
-}
+    };
+    return Windows;
+}());
+exports.Windows = Windows;

@@ -1,9 +1,9 @@
-import Drive from './classes/drive'
-import { Darwin } from './platforms/darwin'
-import { Linux } from './platforms/linux'
-import { Windows } from './platforms/windows'
+import Drive from './classes/drive';
+import {Darwin} from './platforms/darwin';
+import {Linux} from './platforms/linux';
+import {Windows} from './platforms/windows';
 
-import os from 'os'
+import os from 'os';
 
 /**
  * Detects current platform.
@@ -11,7 +11,7 @@ import os from 'os'
  * @return {string} Platform: win32, linux, darwin.
  */
 function detectPlatform(): string {
-  return os.platform().toLowerCase()
+    return os.platform().toLowerCase();
 }
 
 /**
@@ -22,35 +22,35 @@ function detectPlatform(): string {
  */
 export function getDiskInfo(): Promise<Drive[]> {
 
-  const platform = detectPlatform()
+    const platform = detectPlatform();
 
-  return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-    try {
+        try {
 
-      let drivesInfo: Drive[]
+            let drivesInfo: Drive[];
 
-      switch (platform) {
-        case 'win32':
-          drivesInfo = Windows.run()
-          resolve(drivesInfo)
-          break
-        case 'linux':
-          drivesInfo = Linux.run()
-          resolve(drivesInfo)
-          break
-        case 'darwin':
-          drivesInfo = Darwin.run()
-          resolve(drivesInfo)
-          break
-        default:
-          reject('OS not recognized')
-      }
+            switch (platform) {
+                case 'win32':
+                    drivesInfo = Windows.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'linux':
+                    drivesInfo = Linux.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'darwin':
+                    drivesInfo = Darwin.run();
+                    resolve(drivesInfo);
+                    break;
+                default:
+                    reject('OS not recognized');
+            }
 
-    } catch (e) {
-      reject(e)
-    }
+        } catch (e) {
+            reject(e);
+        }
 
-  })
+    })
 
 }

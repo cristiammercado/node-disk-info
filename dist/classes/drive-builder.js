@@ -1,93 +1,85 @@
-import Drive from './drive';
-import {IDriveJson} from './drive-json';
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var drive_1 = __importDefault(require("./drive"));
 /**
  * Builder for Drive class.
  *
  * @author Cristiam Mercado
  */
-export class DriveBuilder {
-
-    /**
-     * Private JSON instance of Drive class.
-     */
-    private readonly json: IDriveJson;
-
+var DriveBuilder = /** @class */ (function () {
     /**
      * Constructor.
      *
      * @param {Drive} drive Instance of Drive class.
      */
-    constructor(drive?: Drive) {
-        this.json = drive ? drive.toJSON() : {} as IDriveJson;
+    function DriveBuilder(drive) {
+        this.json = drive ? drive.toJSON() : {};
     }
-
     /**
      * Method to set filesystem property.
      *
      * @param {string} filesystem Drive filesystem.
      */
-    public filesystem(filesystem: string): DriveBuilder {
+    DriveBuilder.prototype.filesystem = function (filesystem) {
         this.json.filesystem = filesystem;
         return this;
-    }
-
+    };
     /**
      * Method to set blocks property.
      *
      * @param {number} blocks Blocks associated to disk.
      */
-    public blocks(blocks: number): DriveBuilder {
+    DriveBuilder.prototype.blocks = function (blocks) {
         this.json.blocks = blocks;
         return this;
-    }
-
+    };
     /**
      * Method to set used property.
      *
      * @param {number} used Used disk space.
      */
-    public used(used: number): DriveBuilder {
+    DriveBuilder.prototype.used = function (used) {
         this.json.used = used;
         return this;
-    }
-
+    };
     /**
      * Method to set available property.
      *
      * @param {number} available Available disk space.
      */
-    public available(available: number): DriveBuilder {
+    DriveBuilder.prototype.available = function (available) {
         this.json.available = available;
         return this;
-    }
-
+    };
     /**
      * Method to set capacity property.
      *
      * @param {string} capacity Disk capacity.
      */
-    public capacity(capacity: string): DriveBuilder {
+    DriveBuilder.prototype.capacity = function (capacity) {
         this.json.capacity = capacity;
         return this;
-    }
-
+    };
     /**
      * Method to set mounted property.
      *
      * @param {string} mounted Indicates the mount point of the disk.
      */
-    public mounted(mounted: string): DriveBuilder {
+    DriveBuilder.prototype.mounted = function (mounted) {
         this.json.mounted = mounted;
         return this;
-    }
-
+    };
     /**
      * Builds a Drive instance with data setted by methods.
      *
      * @return {Drive} Instance of Drive class.
      */
-    public build(): Drive {
-        return Drive.fromJSON(this.json);
-    }
-}
+    DriveBuilder.prototype.build = function () {
+        return drive_1.default.fromJSON(this.json);
+    };
+    return DriveBuilder;
+}());
+exports.DriveBuilder = DriveBuilder;
