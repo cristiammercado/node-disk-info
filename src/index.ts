@@ -54,3 +54,30 @@ export function getDiskInfo(): Promise<Drive[]> {
     })
 
 }
+
+/**
+ * Get disk info according current platform in an syncronous way.
+ *
+ * @author Cristiam Mercado
+ * @return {Drive[]} Array of disks and their info.
+ */
+export function getDiskInfoSync(): Drive[] {
+
+    const platform = detectPlatform();
+    let drivesInfo: Drive[];
+
+    switch (platform) {
+        case 'win32':
+            drivesInfo = Windows.run();
+            return drivesInfo;
+        case 'linux':
+            drivesInfo = Linux.run();
+            return drivesInfo;
+        case 'darwin':
+            drivesInfo = Darwin.run();
+            return drivesInfo;
+        default:
+            throw new Error('OS not recognized: ' + platform);
+    }
+
+}

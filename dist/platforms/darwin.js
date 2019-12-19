@@ -19,7 +19,7 @@ var Darwin = /** @class */ (function () {
      */
     Darwin.run = function () {
         var drives = [];
-        var buffer = child_process_1.execSync(constants_1.Constants.LINUX_COMMAND).toString();
+        var buffer = child_process_1.execSync(constants_1.Constants.DARWIN_COMMAND).toString();
         var lines = buffer.split('\n');
         lines.forEach(function (value, index, array) {
             if (value !== '') {

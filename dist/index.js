@@ -49,3 +49,27 @@ function getDiskInfo() {
     });
 }
 exports.getDiskInfo = getDiskInfo;
+/**
+ * Get disk info according current platform in an syncronous way.
+ *
+ * @author Cristiam Mercado
+ * @return {Drive[]} Array of disks and their info.
+ */
+function getDiskInfoSync() {
+    var platform = detectPlatform();
+    var drivesInfo;
+    switch (platform) {
+        case 'win32':
+            drivesInfo = windows_1.Windows.run();
+            return drivesInfo;
+        case 'linux':
+            drivesInfo = linux_1.Linux.run();
+            return drivesInfo;
+        case 'darwin':
+            drivesInfo = darwin_1.Darwin.run();
+            return drivesInfo;
+        default:
+            throw new Error('OS not recognized: ' + platform);
+    }
+}
+exports.getDiskInfoSync = getDiskInfoSync;
