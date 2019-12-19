@@ -49,3 +49,7 @@ try {
     console.error(e);
 }
 ```
+
+## License
+
+[MIT](https://github.com/cristiammercado/node-disk-info/blob/master/LICENSE)
