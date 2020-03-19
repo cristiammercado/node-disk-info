@@ -1,7 +1,7 @@
-import {execSync} from 'child_process';
 import {Constants} from '../utils/constants';
 
 import Drive from '../classes/drive';
+import {Utils} from "../utils/utils";
 
 /**
  * Class with Windows specific logic to get disk info.
@@ -16,7 +16,7 @@ export class Windows {
     public static run(): Drive[] {
 
         const drives: Drive[] = [];
-        const buffer = execSync(Constants.WINDOWS_COMMAND).toString();
+        const buffer = Utils.execute(Constants.WINDOWS_COMMAND);
         const lines = buffer.split('\r\r\n');
 
         let newDiskIteration = false;

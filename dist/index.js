@@ -1,20 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var darwin_1 = require("./platforms/darwin");
 var linux_1 = require("./platforms/linux");
 var windows_1 = require("./platforms/windows");
-var os_1 = __importDefault(require("os"));
-/**
- * Detects current platform.
- *
- * @return {string} Platform: win32, linux, darwin.
- */
-function detectPlatform() {
-    return os_1.default.platform().toLowerCase();
-}
+var utils_1 = require("./utils/utils");
 /**
  * Get disk info according current platform.
  *
@@ -22,9 +11,9 @@ function detectPlatform() {
  * @return {Promise<Drive[]>} Promise resolves array of disks and their info.
  */
 function getDiskInfo() {
-    var platform = detectPlatform();
     return new Promise(function (resolve, reject) {
         try {
+            var platform = utils_1.Utils.detectPlatform();
             var drivesInfo = void 0;
             switch (platform) {
                 case 'win32':
@@ -40,7 +29,7 @@ function getDiskInfo() {
                     resolve(drivesInfo);
                     break;
                 default:
-                    reject('OS not recognized');
+                    reject(new Error("Platform not recognized: " + platform));
             }
         }
         catch (e) {
@@ -56,7 +45,7 @@ exports.getDiskInfo = getDiskInfo;
  * @return {Drive[]} Array of disks and their info.
  */
 function getDiskInfoSync() {
-    var platform = detectPlatform();
+    var platform = utils_1.Utils.detectPlatform();
     var drivesInfo;
     switch (platform) {
         case 'win32':
@@ -69,7 +58,7 @@ function getDiskInfoSync() {
             drivesInfo = darwin_1.Darwin.run();
             return drivesInfo;
         default:
-            throw new Error('OS not recognized: ' + platform);
+            throw new Error("Platform not recognized: " + platform);
     }
 }
 exports.getDiskInfoSync = getDiskInfoSync;

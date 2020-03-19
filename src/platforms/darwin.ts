@@ -1,7 +1,7 @@
-import {execSync} from 'child_process';
 import {Constants} from '../utils/constants';
 
 import Drive from '../classes/drive';
+import {Utils} from "../utils/utils";
 
 /**
  * Class with OSX specific logic to get disk info.
@@ -16,7 +16,7 @@ export class Darwin {
     public static run(): Drive[] {
 
         const drives: Drive[] = [];
-        const buffer = execSync(Constants.DARWIN_COMMAND).toString();
+        const buffer = Utils.execute(Constants.DARWIN_COMMAND);
         const lines = buffer.split('\n');
 
         lines.forEach((value, index, array) => {
