@@ -1,19 +1,55 @@
 import {getDiskInfo, getDiskInfoSync} from '../src';
+import {Utils} from '../src/utils/utils';
+import * as os from 'os';
 
-describe('node-disk-info', () => {
+describe('node-disk-info-win32', () => {
 
-    it('should generate disks list info', () => {
+    const WINDOWS_COMMAND_RESPONSE: Buffer = Buffer.from('\r\r\n' +
+        '\r\r\n' +
+        'Caption=C:\r\r\n' +
+        'Description=Disco fijo local\r\r\n' +
+        'FreeSpace=3771858944\r\r\n' +
+        'Size=119387713536\r\r\n' +
+        'VolumeSerialNumber=2ADAE52C\r\r\n' +
+        '\r\r\n' +
+        '\r\r\n' +
+        'Caption=D:\r\r\n' +
+        'Description=Disco fijo local\r\r\n' +
+        'FreeSpace=17136254976\r\r\n' +
+        'Size=925015994368\r\r\n' +
+        'VolumeSerialNumber=5140A8B0\r\r\n' +
+        '\r\r\n' +
+        '\r\r\n' +
+        'Caption=E:\r\r\n' +
+        'Description=Disco CD-ROM\r\r\n' +
+        'FreeSpace=\r\r\n' +
+        'Size=\r\r\n' +
+        'VolumeSerialNumber=\r\r\n' +
+        '\r\r\n' +
+        '\r\r\n' +
+        '\r\r\n', 'utf8');
+
+    beforeAll(() => {
+        if (os.platform() !== 'win32') {
+            spyOn(Utils, 'detectPlatform').and.callFake(() => 'win32');
+            spyOn(Utils, 'execute').and.callFake((command: string) => WINDOWS_COMMAND_RESPONSE.toString());
+        }
+    });
+
+    it('should generate disks list info for Windows', (done) => {
         getDiskInfo()
             .then(values => {
                 expect(values).toBeDefined();
                 expect(values.length).toBeGreaterThanOrEqual(0);
+
+                done();
             })
             .catch(reason => {
-                throw reason;
+                done.fail(reason);
             });
     });
 
-    it('should generate disk info', () => {
+    it('should generate disk info for Windows', (done) => {
         getDiskInfo()
             .then(values => {
                 expect(values.length).toBeGreaterThan(0);
@@ -37,20 +73,22 @@ describe('node-disk-info', () => {
 
                 expect(disk.mounted).toBeDefined();
                 expect(typeof disk.mounted).toEqual('string');
+
+                done();
             })
             .catch(reason => {
-                throw reason;
+                done.fail(reason);
             });
     });
 
-    it('should generate disks list info sync', () => {
+    it('should generate disks list info sync for Windows', () => {
         const values = getDiskInfoSync();
 
         expect(values).toBeDefined();
         expect(values.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should generate disk info sync', () => {
+    it('should generate disk info sync for Windows', () => {
         const values = getDiskInfoSync();
 
         expect(values.length).toBeGreaterThan(0);
