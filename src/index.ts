@@ -2,17 +2,7 @@ import Drive from './classes/drive';
 import {Darwin} from './platforms/darwin';
 import {Linux} from './platforms/linux';
 import {Windows} from './platforms/windows';
-
-import os from 'os';
-
-/**
- * Detects current platform.
- *
- * @return {string} Platform: win32, linux, darwin.
- */
-function detectPlatform(): string {
-    return os.platform().toLowerCase();
-}
+import {Utils} from './utils/utils';
 
 /**
  * Get disk info according current platform.
@@ -22,12 +12,11 @@ function detectPlatform(): string {
  */
 export function getDiskInfo(): Promise<Drive[]> {
 
-    const platform = detectPlatform();
-
     return new Promise((resolve, reject) => {
 
         try {
 
+            const platform = Utils.detectPlatform();
             let drivesInfo: Drive[];
 
             switch (platform) {
@@ -44,7 +33,7 @@ export function getDiskInfo(): Promise<Drive[]> {
                     resolve(drivesInfo);
                     break;
                 default:
-                    reject('OS not recognized');
+                    reject(new Error(`Platform not recognized: ${platform}`));
             }
 
         } catch (e) {
@@ -63,7 +52,7 @@ export function getDiskInfo(): Promise<Drive[]> {
  */
 export function getDiskInfoSync(): Drive[] {
 
-    const platform = detectPlatform();
+    const platform = Utils.detectPlatform();
     let drivesInfo: Drive[];
 
     switch (platform) {
@@ -77,7 +66,7 @@ export function getDiskInfoSync(): Drive[] {
             drivesInfo = Darwin.run();
             return drivesInfo;
         default:
-            throw new Error('OS not recognized: ' + platform);
+            throw new Error(`Platform not recognized: ${platform}`);
     }
 
 }

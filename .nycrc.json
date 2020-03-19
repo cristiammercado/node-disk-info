@@ -1,0 +1,12 @@
+{
+  "all": true,
+  "check-coverage": true,
+  "report-dir": "./coverage",
+  "reporter": [
+    "lcov",
+    "text"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}

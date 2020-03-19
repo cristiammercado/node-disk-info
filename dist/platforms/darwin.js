@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var child_process_1 = require("child_process");
 var constants_1 = require("../utils/constants");
 var drive_1 = __importDefault(require("../classes/drive"));
+var utils_1 = require("../utils/utils");
 /**
  * Class with OSX specific logic to get disk info.
  */
@@ -19,7 +19,7 @@ var Darwin = /** @class */ (function () {
      */
     Darwin.run = function () {
         var drives = [];
-        var buffer = child_process_1.execSync(constants_1.Constants.DARWIN_COMMAND).toString();
+        var buffer = utils_1.Utils.execute(constants_1.Constants.DARWIN_COMMAND);
         var lines = buffer.split('\n');
         lines.forEach(function (value, index, array) {
             if (value !== '') {

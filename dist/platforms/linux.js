@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var child_process_1 = require("child_process");
 var constants_1 = require("../utils/constants");
 var drive_1 = __importDefault(require("../classes/drive"));
+var utils_1 = require("../utils/utils");
 /**
  * Class with Linux specific logic to get disk info.
  */
@@ -19,7 +19,7 @@ var Linux = /** @class */ (function () {
      */
     Linux.run = function () {
         var drives = [];
-        var buffer = child_process_1.execSync(constants_1.Constants.LINUX_COMMAND).toString();
+        var buffer = utils_1.Utils.execute(constants_1.Constants.LINUX_COMMAND);
         var lines = buffer.split('\n');
         lines.forEach(function (value) {
             if (value !== '') {
