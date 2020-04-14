@@ -1,34 +1,34 @@
-// const nodeDiskInfo = require('node-disk-info'); when install as dependency
+// const nodeDiskInfo = require('node-disk-info'); => Use this when install as a dependency
 const nodeDiskInfo = require('../dist/index');
 
-// async mode
+// async way
 nodeDiskInfo.getDiskInfo()
     .then(disks => {
-        printResults('Async Mode', disks);
+        printResults('ASYNC WAY', disks);
     })
     .catch(reason => {
         console.error(reason);
     });
 
-// sync mode
+// sync way
 try {
     const disks = nodeDiskInfo.getDiskInfoSync();
-    printResults('Sync Mode', disks);
+    printResults('SYNC WAY', disks);
 } catch (e) {
     console.error(e);
 }
 
 function printResults(title, disks) {
 
-    console.log(`============ ${title} ==============`);
+    console.log(`============ ${title} ==============\n`);
 
     for (const disk of disks) {
-        console.log('\nFilesystem:', disk.filesystem);
+        console.log('Filesystem:', disk.filesystem);
         console.log('Blocks:', disk.blocks);
         console.log('Used:', disk.used);
         console.log('Available:', disk.available);
         console.log('Capacity:', disk.capacity);
-        console.log('Mounted:', disk.mounted);
+        console.log('Mounted:', disk.mounted, '\n');
     }
 
 }
