@@ -33,7 +33,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._filesystem;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Drive.prototype, "blocks", {
@@ -45,7 +45,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._blocks;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Drive.prototype, "used", {
@@ -57,7 +57,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._used;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Drive.prototype, "available", {
@@ -69,7 +69,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._available;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Drive.prototype, "capacity", {
@@ -81,7 +81,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._capacity;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Drive.prototype, "mounted", {
@@ -93,7 +93,7 @@ var Drive = /** @class */ (function () {
         get: function () {
             return this._mounted;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return Drive;

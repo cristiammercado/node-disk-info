@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getDiskInfoSync = exports.getDiskInfo = void 0;
 var darwin_1 = require("./platforms/darwin");
 var linux_1 = require("./platforms/linux");
 var windows_1 = require("./platforms/windows");
@@ -43,6 +44,7 @@ exports.getDiskInfo = getDiskInfo;
  *
  * @author Cristiam Mercado
  * @return {Drive[]} Array of disks and their info.
+ * @throws {Error} Current platform must be win32, linux or darwin.
  */
 function getDiskInfoSync() {
     var platform = utils_1.Utils.detectPlatform();
