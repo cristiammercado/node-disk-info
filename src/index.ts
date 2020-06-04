@@ -49,6 +49,7 @@ export function getDiskInfo(): Promise<Drive[]> {
  *
  * @author Cristiam Mercado
  * @return {Drive[]} Array of disks and their info.
+ * @throws {Error} Current platform must be win32, linux or darwin.
  */
 export function getDiskInfoSync(): Drive[] {
 

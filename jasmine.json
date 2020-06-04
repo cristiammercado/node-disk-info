@@ -3,5 +3,6 @@
   "spec_files": [
     "*.spec.ts"
   ],
-  "stopSpecOnExpectationFailure": false
+  "stopSpecOnExpectationFailure": false,
+  "random": true
 }
