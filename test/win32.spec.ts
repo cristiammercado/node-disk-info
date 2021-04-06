@@ -32,7 +32,7 @@ describe('node-disk-info-win32', () => {
     beforeAll(() => {
         if (os.platform() !== 'win32') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'win32');
-            spyOn(Utils, 'execute').and.callFake((command: string) => WINDOWS_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake(() => WINDOWS_COMMAND_RESPONSE.toString());
         }
     });
 

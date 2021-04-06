@@ -1,7 +1,7 @@
 {
   "name": "node-disk-info",
   "version": "1.2.0",
-  "description": "Node module to get disk information in Windows, Linux & Mac. It works with Electron.",
+  "description": "Node module to get disk information in Windows, Linux, Mac, FreeBSD & OpenBSD. It works with Electron.",
   "homepage": "https://github.com/cristiammercado/node-disk-info",
   "bugs": {
     "email": "contact@cristiammercado.com",
@@ -34,21 +34,21 @@
   "author": {
     "name": "Cristiam Mercado",
     "email": "contact@cristiammercado.com",
-    "url": "https://www.cristiammercado.com/en"
+    "url": "https://cristiammercado.com/en"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "@types/jasmine": "^3.5.10",
-    "@types/node": "^14.0.10",
-    "jasmine": "^3.5.0",
-    "jasmine-core": "^3.5.0",
-    "jasmine-ts": "^0.3.0",
-    "mem": "^6.1.0",
+    "@ert78gb/jasmine-ts": "^0.3.2",
+    "@types/jasmine": "^3.6.9",
+    "@types/node": "^14.14.37",
+    "jasmine": "^3.7.0",
+    "jasmine-core": "^3.7.1",
+    "mem": "^8.1.0",
     "minimist": "^1.2.5",
     "nyc": "^15.1.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.3"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3",
+    "yargs-parser": "^20.2.7"
   },
   "engines": {
     "node": ">= 10"
