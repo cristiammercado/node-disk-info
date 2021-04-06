@@ -15,7 +15,7 @@ describe('node-disk-info-macos', () => {
         'tmpfs              6151516       0   6151516       0% /sys/fs/cgroup                                                                                   \n' +
         'tmpfs                  100       x       100       0% /var/lib/lxd/shmounts                                                                            \n' +
         'tmpfs                  100       0        xx       0% /var/lib/lxd/devlxd                                                                              \n' +
-        '/dev/sdb          15728640 2088556  11919636      15% /var/lib/lxd/storage-pools/default', 'utf8');
+        '/dev/sdb          15728640 2088556  11919636      15% /var/lib/lxd/storage-pools/default                                                               \n', 'utf8');
 
     beforeAll(() => {
         if (os.platform() !== 'darwin') {

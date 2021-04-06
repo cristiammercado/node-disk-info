@@ -1,6 +1,6 @@
 # Node disk info
 
-Node module to get disk information in Windows, Linux & Mac. It works with Electron. The library will call system command to get drives info, parse the results and load info in array. Inspired by [diskinfo](https://github.com/BenoitGauthier/diskinfo).
+Node module to get disk information in Windows, Linux, Mac, FreeBSD & OpenBSD. It works with Electron. The library will call system command to get drives info, parse the results and load info in array. Inspired by [diskinfo](https://github.com/BenoitGauthier/diskinfo).
 
 [![Build Status](https://travis-ci.org/cristiammercado/node-disk-info.svg?branch=master)](https://travis-ci.org/cristiammercado/node-disk-info)
 [![npm version](https://badge.fury.io/js/node-disk-info.svg)](https://badge.fury.io/js/node-disk-info)

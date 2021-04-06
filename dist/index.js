@@ -17,19 +17,36 @@ function getDiskInfo() {
             var platform = utils_1.Utils.detectPlatform();
             var drivesInfo = void 0;
             switch (platform) {
-                case 'win32':
-                    drivesInfo = windows_1.Windows.run();
-                    resolve(drivesInfo);
+                case 'aix': // IBM AIX platform
+                    reject(new Error("Platform not supported: " + platform));
                     break;
-                case 'linux':
-                    drivesInfo = linux_1.Linux.run();
-                    resolve(drivesInfo);
+                case 'android': // Android platform
+                    reject(new Error("Platform not supported: " + platform));
                     break;
-                case 'darwin':
+                case 'darwin': // Darwin platfrom(MacOS, IOS etc)
                     drivesInfo = darwin_1.Darwin.run();
                     resolve(drivesInfo);
                     break;
-                default:
+                case 'freebsd': // FreeBSD Platform
+                    drivesInfo = darwin_1.Darwin.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'linux': // Linux Platform
+                    drivesInfo = linux_1.Linux.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'openbsd': // OpenBSD platform
+                    drivesInfo = darwin_1.Darwin.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'sunos': // SunOS platform
+                    reject(new Error("Platform not supported: " + platform));
+                    break;
+                case 'win32': // windows platform
+                    drivesInfo = windows_1.Windows.run();
+                    resolve(drivesInfo);
+                    break;
+                default: // unknown platform
                     reject(new Error("Platform not recognized: " + platform));
             }
         }
@@ -50,16 +67,28 @@ function getDiskInfoSync() {
     var platform = utils_1.Utils.detectPlatform();
     var drivesInfo;
     switch (platform) {
-        case 'win32':
-            drivesInfo = windows_1.Windows.run();
-            return drivesInfo;
-        case 'linux':
-            drivesInfo = linux_1.Linux.run();
-            return drivesInfo;
-        case 'darwin':
+        case 'aix': // IBM AIX platform
+            throw new Error("Platform not supported: " + platform);
+        case 'android': // Android platform
+            throw new Error("Platform not supported: " + platform);
+        case 'darwin': // Darwin platfrom(MacOS, IOS etc)
             drivesInfo = darwin_1.Darwin.run();
             return drivesInfo;
-        default:
+        case 'freebsd': // FreeBSD Platform
+            drivesInfo = darwin_1.Darwin.run();
+            return drivesInfo;
+        case 'linux': // Linux Platform
+            drivesInfo = linux_1.Linux.run();
+            return drivesInfo;
+        case 'openbsd': // OpenBSD platform
+            drivesInfo = darwin_1.Darwin.run();
+            return drivesInfo;
+        case 'sunos': // SunOS platform
+            throw new Error("Platform not supported: " + platform);
+        case 'win32': // windows platform
+            drivesInfo = windows_1.Windows.run();
+            return drivesInfo;
+        default: // unknown platform
             throw new Error("Platform not recognized: " + platform);
     }
 }

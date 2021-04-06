@@ -20,19 +20,36 @@ export function getDiskInfo(): Promise<Drive[]> {
             let drivesInfo: Drive[];
 
             switch (platform) {
-                case 'win32':
-                    drivesInfo = Windows.run();
-                    resolve(drivesInfo);
+                case 'aix': // IBM AIX platform
+                    reject(new Error(`Platform not supported: ${platform}`));
                     break;
-                case 'linux':
-                    drivesInfo = Linux.run();
-                    resolve(drivesInfo);
+                case 'android': // Android platform
+                    reject(new Error(`Platform not supported: ${platform}`));
                     break;
-                case 'darwin':
+                case 'darwin': // Darwin platfrom(MacOS, IOS etc)
                     drivesInfo = Darwin.run();
                     resolve(drivesInfo);
                     break;
-                default:
+                case 'freebsd': // FreeBSD Platform
+                    drivesInfo = Darwin.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'linux': // Linux Platform
+                    drivesInfo = Linux.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'openbsd': // OpenBSD platform
+                    drivesInfo = Darwin.run();
+                    resolve(drivesInfo);
+                    break;
+                case 'sunos': // SunOS platform
+                    reject(new Error(`Platform not supported: ${platform}`));
+                    break;
+                case 'win32': // windows platform
+                    drivesInfo = Windows.run();
+                    resolve(drivesInfo);
+                    break;    
+                default: // unknown platform
                     reject(new Error(`Platform not recognized: ${platform}`));
             }
 
@@ -57,17 +74,29 @@ export function getDiskInfoSync(): Drive[] {
     let drivesInfo: Drive[];
 
     switch (platform) {
-        case 'win32':
-            drivesInfo = Windows.run();
-            return drivesInfo;
-        case 'linux':
-            drivesInfo = Linux.run();
-            return drivesInfo;
-        case 'darwin':
+        case 'aix': // IBM AIX platform
+            throw new Error("Platform not supported: " + platform);
+        case 'android': // Android platform
+            throw new Error("Platform not supported: " + platform);
+        case 'darwin': // Darwin platfrom(MacOS, IOS etc)
             drivesInfo = Darwin.run();
             return drivesInfo;
-        default:
-            throw new Error(`Platform not recognized: ${platform}`);
+        case 'freebsd': // FreeBSD Platform
+            drivesInfo = Darwin.run();
+            return drivesInfo;
+        case 'linux': // Linux Platform
+            drivesInfo = Linux.run();
+            return drivesInfo;
+        case 'openbsd': // OpenBSD platform
+            drivesInfo = Darwin.run();
+            return drivesInfo;
+        case 'sunos': // SunOS platform
+            throw new Error("Platform not supported: " + platform);
+        case 'win32': // windows platform
+            drivesInfo = Windows.run();
+            return drivesInfo;
+        default: // unknown platform
+            throw new Error("Platform not recognized: " + platform);
     }
 
 }
