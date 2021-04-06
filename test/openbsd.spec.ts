@@ -2,33 +2,34 @@ import {getDiskInfo, getDiskInfoSync} from '../src';
 import {Utils} from '../src/utils/utils';
 import * as os from 'os';
 
-describe('node-disk-info-linux', () => {
+describe('node-disk-info-openbsd', () => {
 
-    const LINUX_COMMAND_RESPONSE: Buffer = Buffer.from('/dev/sdb          15728640 2088556  11919636      15% /                                                                                                \n' +
+    const OPENBSD_COMMAND_RESPONSE: Buffer = Buffer.from('/dev/sdb          15728640 2088556  11919636      15% /                                                                                                \n' +
         'none                   492       4       488       1% /dev                                                                                             \n' +
         'udev               6144744       0   6144744       0% /dev/tty                                                                                         \n' +
-        'tmpfs                  bbb       0       100       0% /dev/lxd                                                                                         \n' +
+        'tmpfs                  100       0       100       0% /dev/lxd                                                                                         \n' +
         'tmpfs                  100       0       100       0% /dev/.lxd-mounts                                                                                 \n' +
-        'tmpfs              6151516       b   6151516       0% /dev/shm                                                                                         \n' +
+        'tmpfs              6151516       0   6151516       0% /dev/shm                                                                                         \n' +
         'tmpfs              6151516       4   6151512       1% /run                                                                                             \n' +
-        'tmpfs                 5120       0      5120       0% /run/lock                                                                                        \n' +
+        'tmpfs                   xx       0      5120       0% /run/lock                                                                                        \n' +
         'tmpfs              6151516       0   6151516       0% /sys/fs/cgroup                                                                                   \n' +
-        'tmpfs                  100       0       100       0% /var/lib/lxd/shmounts                                                                            \n' +
-        'tmpfs                  100       0        bb       0% /var/lib/lxd/devlxd                                                                              \n' +
+        'tmpfs                  100       x       100       0% /var/lib/lxd/shmounts                                                                            \n' +
+        'tmpfs                  100       0        xx       0% /var/lib/lxd/devlxd                                                                              \n' +
         '/dev/sdb          15728640 2088556  11919636      15% /var/lib/lxd/storage-pools/default                                                               \n', 'utf8');
 
     beforeAll(() => {
-        if (os.platform() !== 'linux') {
-            spyOn(Utils, 'detectPlatform').and.callFake(() => 'linux');
-            spyOn(Utils, 'execute').and.callFake((command: string) => LINUX_COMMAND_RESPONSE.toString());
+        if (os.platform() !== 'openbsd') {
+            spyOn(Utils, 'detectPlatform').and.callFake(() => 'openbsd');
+            spyOn(Utils, 'execute').and.callFake((command: string) => OPENBSD_COMMAND_RESPONSE.toString());
         }
     });
 
-    it('should generate disks list info for Linux', (done) => {
+    it('should generate disks list info for OpenBSD', (done) => {
         getDiskInfo()
             .then(values => {
                 expect(values).toBeDefined();
                 expect(values.length).toBeGreaterThanOrEqual(0);
+
                 done();
             })
             .catch(reason => {
@@ -36,7 +37,7 @@ describe('node-disk-info-linux', () => {
             });
     });
 
-    it('should generate disk info for Linux', (done) => {
+    it('should generate disk info for OpenBSD', (done) => {
         getDiskInfo()
             .then(values => {
                 expect(values.length).toBeGreaterThan(0);
@@ -68,14 +69,14 @@ describe('node-disk-info-linux', () => {
             });
     });
 
-    it('should generate disks list info sync for Linux', () => {
+    it('should generate disks list info sync for OpenBSD', () => {
         const values = getDiskInfoSync();
 
         expect(values).toBeDefined();
         expect(values.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should generate disk info sync for Linux', () => {
+    it('should generate disk info sync for OpenBSD', () => {
         const values = getDiskInfoSync();
 
         expect(values.length).toBeGreaterThan(0);
