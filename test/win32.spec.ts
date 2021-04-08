@@ -32,12 +32,12 @@ describe('node-disk-info-win32', () => {
     beforeAll(() => {
         if (os.platform() !== 'win32') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'win32');
-            spyOn(Utils, 'chcp').and.callFake(() => '65001');
             spyOn(Utils, 'execute').and.callFake(() => WINDOWS_COMMAND_RESPONSE);
         }
     });
 
     it('should generate disks list info for Windows', (done) => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65001');
         getDiskInfo()
             .then(values => {
                 expect(values).toBeDefined();
@@ -51,6 +51,7 @@ describe('node-disk-info-win32', () => {
     });
 
     it('should generate disk info for Windows', (done) => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65001');
         getDiskInfo()
             .then(values => {
                 expect(values.length).toBeGreaterThan(0);
@@ -83,6 +84,7 @@ describe('node-disk-info-win32', () => {
     });
 
     it('should generate disks list info sync for Windows', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65001');
         const values = getDiskInfoSync();
 
         expect(values).toBeDefined();
@@ -90,6 +92,7 @@ describe('node-disk-info-win32', () => {
     });
 
     it('should generate disk info sync for Windows', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65001');
         const values = getDiskInfoSync();
 
         expect(values.length).toBeGreaterThan(0);
