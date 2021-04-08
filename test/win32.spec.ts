@@ -32,7 +32,7 @@ describe('node-disk-info-win32', () => {
     beforeAll(() => {
         if (os.platform() !== 'win32') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'win32');
-            spyOn(Utils, 'execute').and.callFake(() => WINDOWS_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake(() => WINDOWS_COMMAND_RESPONSE);
         }
     });
 
@@ -112,6 +112,38 @@ describe('node-disk-info-win32', () => {
 
         expect(disk.mounted).toBeDefined();
         expect(typeof disk.mounted).toEqual('string');
+    });
+
+    it('should generate disks list info sync for Windows chcp 65000', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65000');
+        const values = getDiskInfoSync();
+
+        expect(values).toBeDefined();
+        expect(values.length).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should generate disks list info sync for Windows chcp 65001', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => '65001');
+        const values = getDiskInfoSync();
+
+        expect(values).toBeDefined();
+        expect(values.length).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should generate disks list info sync for Windows chcp ascii', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => 'ascii');
+        const values = getDiskInfoSync();
+
+        expect(values).toBeDefined();
+        expect(values.length).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should generate disks list info sync for Windows chcp 1252', () => {
+        spyOn(Utils, 'chcp').and.callFake(() => '1252');
+        const values = getDiskInfoSync();
+
+        expect(values).toBeDefined();
+        expect(values.length).toBeGreaterThanOrEqual(0);
     });
 
 });

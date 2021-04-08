@@ -20,7 +20,7 @@ describe('node-disk-info-freebsd', () => {
     beforeAll(() => {
         if (os.platform() !== 'freebsd') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'freebsd');
-            spyOn(Utils, 'execute').and.callFake((command: string) => FREEBSD_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake((command: string) => FREEBSD_COMMAND_RESPONSE);
         }
     });
 

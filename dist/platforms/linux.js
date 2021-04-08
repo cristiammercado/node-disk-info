@@ -21,7 +21,7 @@ var Linux = /** @class */ (function () {
     Linux.run = function () {
         var drives = [];
         var buffer = utils_1.Utils.execute(constants_1.Constants.LINUX_COMMAND);
-        var lines = buffer.split('\n');
+        var lines = buffer.toString().split('\n');
         lines.forEach(function (value) {
             if (value !== '') {
                 var line = value.replace(/ +(?= )/g, '');

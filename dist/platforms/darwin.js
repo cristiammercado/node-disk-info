@@ -21,7 +21,7 @@ var Darwin = /** @class */ (function () {
     Darwin.run = function () {
         var drives = [];
         var buffer = utils_1.Utils.execute(constants_1.Constants.DARWIN_COMMAND);
-        var lines = buffer.split('\n');
+        var lines = buffer.toString().split('\n');
         lines.forEach(function (value, index, array) {
             if (value !== '') {
                 var line = value.replace(/ +(?= )/g, '');

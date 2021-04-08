@@ -20,7 +20,7 @@ describe('node-disk-info-linux', () => {
     beforeAll(() => {
         if (os.platform() !== 'linux') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'linux');
-            spyOn(Utils, 'execute').and.callFake((command: string) => LINUX_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake((command: string) => LINUX_COMMAND_RESPONSE);
         }
     });
 
