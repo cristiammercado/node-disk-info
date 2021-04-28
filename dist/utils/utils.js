@@ -50,7 +50,7 @@ var Utils = /** @class */ (function () {
      * @param {Buffer} command: Command to execute.
      */
     Utils.execute = function (command) {
-        return child_process_1.execSync(command, { encoding: 'buffer' });
+        return child_process_1.execSync(command, { windowsHide: true, encoding: 'buffer' });
     };
     return Utils;
 }());

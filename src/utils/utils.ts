@@ -30,6 +30,6 @@ export class Utils {
      * @param {Buffer} command: Command to execute.
      */
     public static execute(command: string): Buffer {
-        return execSync(command,{encoding: 'buffer'});
+        return execSync(command,{windowsHide: true, encoding: 'buffer'});
     }
 }
