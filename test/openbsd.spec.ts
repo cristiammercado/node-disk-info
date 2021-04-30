@@ -20,7 +20,7 @@ describe('node-disk-info-openbsd', () => {
     beforeAll(() => {
         if (os.platform() !== 'openbsd') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'openbsd');
-            spyOn(Utils, 'execute').and.callFake((command: string) => OPENBSD_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake((command: string) => OPENBSD_COMMAND_RESPONSE);
         }
     });
 

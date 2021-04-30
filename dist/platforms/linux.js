@@ -21,11 +21,12 @@ var Linux = /** @class */ (function () {
     Linux.run = function () {
         var drives = [];
         var buffer = utils_1.Utils.execute(constants_1.Constants.LINUX_COMMAND);
-        var lines = buffer.split('\n');
+        var lines = buffer.toString().split('\n');
         lines.forEach(function (value) {
             if (value !== '') {
                 var line = value.replace(/ +(?= )/g, '');
                 var tokens = line.split(' ');
+                tokens[5] = tokens.slice(5).join(' ') // Prevent space splitting break the disk name
                 var d = new drive_1.default(tokens[0], isNaN(parseFloat(tokens[1])) ? 0 : +tokens[1], isNaN(parseFloat(tokens[2])) ? 0 : +tokens[2], isNaN(parseFloat(tokens[3])) ? 0 : +tokens[3], tokens[4], tokens[5]);
                 drives.push(d);
             }

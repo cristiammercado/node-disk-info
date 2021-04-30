@@ -7,6 +7,7 @@ exports.Windows = void 0;
 var constants_1 = require("../utils/constants");
 var drive_1 = __importDefault(require("../classes/drive"));
 var utils_1 = require("../utils/utils");
+var iconv_lite_1 = __importDefault(require("iconv-lite"));
 /**
  * Class with Windows specific logic to get disk info.
  */
@@ -21,7 +22,25 @@ var Windows = /** @class */ (function () {
     Windows.run = function () {
         var drives = [];
         var buffer = utils_1.Utils.execute(constants_1.Constants.WINDOWS_COMMAND);
-        var lines = buffer.split('\r\r\n');
+        var cp = utils_1.Utils.chcp();
+        var encoding = '';
+        switch (cp) {
+            case '65000': // UTF-7
+                encoding = 'UTF-7';
+                break;
+            case '65001': // UTF-8
+                encoding = 'UTF-8';
+                break;
+            default: // Other Encoding
+                if (/^-?[\d.]+(?:e-?\d+)?$/.test(cp)) {
+                    encoding = 'cp' + cp;
+                }
+                else {
+                    encoding = cp;
+                }
+        }
+        buffer = iconv_lite_1.default.encode(iconv_lite_1.default.decode(buffer, encoding), 'UTF-8');
+        var lines = buffer.toString().split('\r\r\n');
         var newDiskIteration = false;
         var caption = '';
         var description = '';

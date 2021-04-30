@@ -1,6 +1,6 @@
 {
   "name": "node-disk-info",
-  "version": "1.3.0",
+  "version": "1.2.1",
   "description": "Node module to get disk information in Windows, Linux, Mac, FreeBSD & OpenBSD. It works with Electron.",
   "homepage": "https://github.com/cristiammercado/node-disk-info",
   "bugs": {
@@ -37,6 +37,9 @@
     "url": "https://cristiammercado.com/en"
   },
   "license": "MIT",
+  "dependencies": {
+    "iconv-lite": "^0.6.2"
+  },
   "devDependencies": {
     "@ert78gb/jasmine-ts": "^0.3.2",
     "@types/jasmine": "^3.6.10",

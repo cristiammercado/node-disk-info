@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * Class with utilitary methods.
  */
@@ -9,9 +10,15 @@ export declare class Utils {
      */
     static detectPlatform(): string;
     /**
+     * Get chcp value (only for Win32 platform).
+     *
+     * @return {string} Platform: win32.
+     */
+    static chcp(): string;
+    /**
      * Executes a command in SO console.
      *
-     * @param {string} command: Command to execute.
+     * @param {Buffer} command: Command to execute.
      */
-    static execute(command: string): string;
+    static execute(command: string): Buffer;
 }

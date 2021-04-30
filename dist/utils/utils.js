@@ -37,12 +37,20 @@ var Utils = /** @class */ (function () {
         return os.platform().toLowerCase();
     };
     /**
+     * Get chcp value (only for Win32 platform).
+     *
+     * @return {string} Platform: win32.
+     */
+    Utils.chcp = function () {
+        return child_process_1.execSync('chcp').toString().split(':')[1].trim();
+    };
+    /**
      * Executes a command in SO console.
      *
-     * @param {string} command: Command to execute.
+     * @param {Buffer} command: Command to execute.
      */
     Utils.execute = function (command) {
-        return child_process_1.execSync(command).toString();
+        return child_process_1.execSync(command, { windowsHide: true, encoding: 'buffer' });
     };
     return Utils;
 }());
