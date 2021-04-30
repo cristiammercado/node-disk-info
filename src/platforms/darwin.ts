@@ -17,7 +17,7 @@ export class Darwin {
 
         const drives: Drive[] = [];
         const buffer = Utils.execute(Constants.DARWIN_COMMAND);
-        const lines = buffer.split('\n');
+        const lines = buffer.toString().split('\n');
 
         lines.forEach((value, index, array) => {
 

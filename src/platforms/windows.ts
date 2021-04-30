@@ -2,6 +2,7 @@ import {Constants} from '../utils/constants';
 
 import Drive from '../classes/drive';
 import {Utils} from "../utils/utils";
+import iconv from 'iconv-lite';
 
 /**
  * Class with Windows specific logic to get disk info.
@@ -16,8 +17,27 @@ export class Windows {
     public static run(): Drive[] {
 
         const drives: Drive[] = [];
-        const buffer = Utils.execute(Constants.WINDOWS_COMMAND);
-        const lines = buffer.split('\r\r\n');
+        let buffer = Utils.execute(Constants.WINDOWS_COMMAND);
+        
+        const cp = Utils.chcp();
+        let encoding = '';
+        switch (cp) {
+            case '65000': // UTF-7
+                encoding = 'UTF-7';
+                break;
+            case '65001': // UTF-8
+                encoding = 'UTF-8';
+                break;   
+            default: // Other Encoding
+                if (/^-?[\d.]+(?:e-?\d+)?$/.test(cp)) {
+                    encoding = 'cp' + cp;
+                } else {
+                    encoding = cp;
+                }
+        }
+        buffer = iconv.encode(iconv.decode(buffer, encoding),'UTF-8');
+
+        const lines = buffer.toString().split('\r\r\n');
 
         let newDiskIteration = false;
 

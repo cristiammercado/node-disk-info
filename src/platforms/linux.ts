@@ -17,7 +17,7 @@ export class Linux {
 
         const drives: Drive[] = [];
         const buffer = Utils.execute(Constants.LINUX_COMMAND);
-        const lines = buffer.split('\n');
+        const lines = buffer.toString().split('\n');
 
         lines.forEach((value) => {
 

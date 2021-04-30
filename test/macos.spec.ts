@@ -20,7 +20,7 @@ describe('node-disk-info-macos', () => {
     beforeAll(() => {
         if (os.platform() !== 'darwin') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'darwin');
-            spyOn(Utils, 'execute').and.callFake((command: string) => DARWIN_COMMAND_RESPONSE.toString());
+            spyOn(Utils, 'execute').and.callFake((command: string) => DARWIN_COMMAND_RESPONSE);
         }
     });
 
