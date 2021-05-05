@@ -1,7 +1,8 @@
-import {Constants} from '../utils/constants';
+import { Constants } from '../utils/constants';
 
 import Drive from '../classes/drive';
-import {Utils} from "../utils/utils";
+import DiskInfoOptions from '../classes/options';
+import { Utils } from "../utils/utils";
 import iconv from 'iconv-lite';
 
 /**
@@ -14,11 +15,13 @@ export class Windows {
      *
      * @return {Drive[]} List of drives and their info.
      */
-    public static run(): Drive[] {
+    public static run(options: DiskInfoOptions): Drive[] {
 
         const drives: Drive[] = [];
-        let buffer = Utils.execute(Constants.WINDOWS_COMMAND);
-        
+        const command = options.namesOnly ? Constants.WINDOWS_COMMAND_NAMES_ONLY : Constants.WINDOWS_COMMAND;
+
+        let buffer = Utils.execute(command);
+
         const cp = Utils.chcp();
         let encoding = '';
         switch (cp) {
@@ -27,7 +30,7 @@ export class Windows {
                 break;
             case '65001': // UTF-8
                 encoding = 'UTF-8';
-                break;   
+                break;
             default: // Other Encoding
                 if (/^-?[\d.]+(?:e-?\d+)?$/.test(cp)) {
                     encoding = 'cp' + cp;
@@ -35,7 +38,7 @@ export class Windows {
                     encoding = cp;
                 }
         }
-        buffer = iconv.encode(iconv.decode(buffer, encoding),'UTF-8');
+        buffer = iconv.encode(iconv.decode(buffer, encoding), 'UTF-8');
 
         const lines = buffer.toString().split('\r\r\n');
 
