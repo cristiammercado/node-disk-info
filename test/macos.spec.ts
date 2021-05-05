@@ -1,6 +1,8 @@
-import {getDiskInfo, getDiskInfoSync} from '../src';
-import {Utils} from '../src/utils/utils';
+import { getDiskInfo, getDiskInfoSync } from '../src';
+import { Utils } from '../src/utils/utils';
 import * as os from 'os';
+import { Constants } from '../src/utils/constants';
+import DiskInfoOptions from '../src/classes/options';
 
 describe('node-disk-info-macos', () => {
 
@@ -17,89 +19,171 @@ describe('node-disk-info-macos', () => {
         'tmpfs                  100       0        xx       0% /var/lib/lxd/devlxd                                                                              \n' +
         '/dev/sdb          15728640 2088556  11919636      15% /var/lib/lxd/storage-pools/default                                                               \n', 'utf8');
 
+    const DARWIN_COMMAND_RESPONSE_NAMES_ONLY: Buffer = Buffer.from('/                                                                                                \n' +
+        '/dev                                                                                             \n' +
+        '/dev/tty                                                                                         \n' +
+        '/dev/lxd                                                                                         \n' +
+        '/dev/.lxd-mounts                                                                                 \n' +
+        '/dev/shm                                                                                         \n' +
+        '/run                                                                                             \n' +
+        '/run/lock                                                                                        \n' +
+        '/sys/fs/cgroup                                                                                   \n' +
+        '/var/lib/lxd/shmounts                                                                            \n' +
+        '/var/lib/lxd/devlxd                                                                              \n' +
+        '/var/lib/lxd/storage-pools/default                                                               \n', 'utf8');
+
+
     beforeAll(() => {
         if (os.platform() !== 'darwin') {
             spyOn(Utils, 'detectPlatform').and.callFake(() => 'darwin');
-            spyOn(Utils, 'execute').and.callFake((command: string) => DARWIN_COMMAND_RESPONSE);
+            spyOn(Utils, 'execute').and.callFake((param) => {
+                if (param === Constants.DARWIN_COMMAND)
+                    return DARWIN_COMMAND_RESPONSE;
+                else
+                    return DARWIN_COMMAND_RESPONSE_NAMES_ONLY;
+            });
         }
     });
 
     it('should generate disks list info for Mac OS', (done) => {
-        getDiskInfo()
-            .then(values => {
+        Promise.all([getDiskInfo(), getDiskInfo(new DiskInfoOptions()), getDiskInfo(new DiskInfoOptions(false)), getDiskInfo(new DiskInfoOptions(true))])
+            .then((values) => {
                 expect(values).toBeDefined();
                 expect(values.length).toBeGreaterThanOrEqual(0);
-
+                expect(values.every(value => value.length > 0))
                 done();
             })
-            .catch(reason => {
+            .catch((reason) => {
                 done.fail(reason);
             });
     });
 
     it('should generate disk info for Mac OS', (done) => {
-        getDiskInfo()
-            .then(values => {
-                expect(values.length).toBeGreaterThan(0);
+        Promise.all([getDiskInfo(), getDiskInfo(new DiskInfoOptions()), getDiskInfo(new DiskInfoOptions(false))])
+            .then((vals) => {
+                vals.forEach(values => {
 
-                const disk = values[0];
 
-                expect(disk.filesystem).toBeDefined();
-                expect(typeof disk.filesystem).toEqual('string');
+                    expect(values.length).toBeGreaterThan(0);
 
-                expect(disk.blocks).toBeDefined();
-                expect(typeof disk.blocks).toEqual('number');
+                    const disk = values[0];
 
-                expect(disk.used).toBeDefined();
-                expect(typeof disk.used).toEqual('number');
+                    expect(disk.filesystem).toBeDefined();
+                    expect(typeof disk.filesystem).toEqual("string");
 
-                expect(disk.available).toBeDefined();
-                expect(typeof disk.available).toEqual('number');
+                    expect(disk.blocks).toBeDefined();
+                    expect(typeof disk.blocks).toEqual("number");
 
-                expect(disk.capacity).toBeDefined();
-                expect(typeof disk.capacity).toEqual('string');
+                    expect(disk.used).toBeDefined();
+                    expect(typeof disk.used).toEqual("number");
 
-                expect(disk.mounted).toBeDefined();
-                expect(typeof disk.mounted).toEqual('string');
+                    expect(disk.available).toBeDefined();
+                    expect(typeof disk.available).toEqual("number");
 
+                    expect(disk.capacity).toBeDefined();
+                    expect(typeof disk.capacity).toEqual("string");
+
+                    expect(disk.mounted).toBeDefined();
+                    expect(typeof disk.mounted).toEqual("string");
+                });
                 done();
             })
-            .catch(reason => {
+            .catch((reason) => {
+                done.fail(reason);
+            });
+    });
+
+    it('should generate disk info for Mac OS - names only', (done) => {
+        Promise.all([getDiskInfo(new DiskInfoOptions(true))])
+            .then((vals) => {
+                vals.forEach(values => {
+                    expect(values.length).toBeGreaterThan(0);
+
+                    const disk = values[0];
+
+                    expect(disk.filesystem).toBeDefined();
+                    expect(typeof disk.filesystem).toEqual("string");
+
+                    expect(disk.blocks).toBeDefined();
+                    expect(typeof disk.blocks).toEqual("number");
+
+                    expect(disk.used).toBeDefined();
+                    expect(typeof disk.used).toEqual("number");
+
+                    expect(disk.available).toBeDefined();
+                    expect(typeof disk.available).toEqual("number");
+
+                    expect(disk.capacity).toBeUndefined();
+                    expect(typeof disk.capacity).toEqual("undefined");
+
+                    expect(disk.mounted).toBeUndefined();
+                    expect(typeof disk.mounted).toEqual("undefined");
+                });
+                done();
+            })
+            .catch((reason) => {
                 done.fail(reason);
             });
     });
 
     it('should generate disks list info sync for Mac OS', () => {
-        const values = getDiskInfoSync();
-
-        expect(values).toBeDefined();
-        expect(values.length).toBeGreaterThanOrEqual(0);
+        var results = [getDiskInfoSync(), getDiskInfoSync(new DiskInfoOptions()), getDiskInfoSync(new DiskInfoOptions(false)), getDiskInfoSync(new DiskInfoOptions(true))]
+        results.forEach(values => {
+            expect(values).toBeDefined();
+            expect(values.length).toBeGreaterThanOrEqual(0);
+        });
     });
 
     it('should generate disk info sync for Mac OS', () => {
-        const values = getDiskInfoSync();
+        var results = [getDiskInfoSync(), getDiskInfoSync(new DiskInfoOptions()), getDiskInfoSync(new DiskInfoOptions(false))]
+        results.forEach(values => {
+            expect(values.length).toBeGreaterThan(0);
 
-        expect(values.length).toBeGreaterThan(0);
+            const disk = values[0];
 
-        const disk = values[0];
+            expect(disk.filesystem).toBeDefined();
+            expect(typeof disk.filesystem).toEqual("string");
 
-        expect(disk.filesystem).toBeDefined();
-        expect(typeof disk.filesystem).toEqual('string');
+            expect(disk.blocks).toBeDefined();
+            expect(typeof disk.blocks).toEqual("number");
 
-        expect(disk.blocks).toBeDefined();
-        expect(typeof disk.blocks).toEqual('number');
+            expect(disk.used).toBeDefined();
+            expect(typeof disk.used).toEqual("number");
 
-        expect(disk.used).toBeDefined();
-        expect(typeof disk.used).toEqual('number');
+            expect(disk.available).toBeDefined();
+            expect(typeof disk.available).toEqual("number");
 
-        expect(disk.available).toBeDefined();
-        expect(typeof disk.available).toEqual('number');
+            expect(disk.capacity).toBeDefined();
+            expect(typeof disk.capacity).toEqual("string");
 
-        expect(disk.capacity).toBeDefined();
-        expect(typeof disk.capacity).toEqual('string');
-
-        expect(disk.mounted).toBeDefined();
-        expect(typeof disk.mounted).toEqual('string');
+            expect(disk.mounted).toBeDefined();
+            expect(typeof disk.mounted).toEqual("string");
+        });
     });
+    it('should generate disk info sync for Mac OS - names only', () => {
+        var results = [getDiskInfoSync(new DiskInfoOptions(true))]
+        results.forEach(values => {
+            expect(values.length).toBeGreaterThan(0);
 
+            const disk = values[0];
+
+            expect(disk.filesystem).toBeDefined();
+            expect(typeof disk.filesystem).toEqual("string");
+
+            expect(disk.blocks).toBeDefined();
+            expect(typeof disk.blocks).toEqual("number");
+
+            expect(disk.used).toBeDefined();
+            expect(typeof disk.used).toEqual("number");
+
+            expect(disk.available).toBeDefined();
+            expect(typeof disk.available).toEqual("number");
+
+            expect(disk.capacity).toBeUndefined();
+            expect(typeof disk.capacity).toEqual("undefined");
+
+            expect(disk.mounted).toBeUndefined();
+            expect(typeof disk.mounted).toEqual("undefined");
+        });
+    });
 });

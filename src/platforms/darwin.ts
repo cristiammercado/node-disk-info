@@ -1,7 +1,8 @@
-import {Constants} from '../utils/constants';
+import { Constants } from '../utils/constants';
 
 import Drive from '../classes/drive';
-import {Utils} from "../utils/utils";
+import DiskInfoOptions from '../classes/options';
+import { Utils } from "../utils/utils";
 
 /**
  * Class with OSX specific logic to get disk info.
@@ -13,10 +14,11 @@ export class Darwin {
      *
      * @return {Drive[]} List of drives and their info.
      */
-    public static run(): Drive[] {
+    public static run(options: DiskInfoOptions): Drive[] {
 
         const drives: Drive[] = [];
-        const buffer = Utils.execute(Constants.DARWIN_COMMAND);
+        const command = options.namesOnly ? Constants.DARWIN_COMMAND_NAMES_ONLY : Constants.DARWIN_COMMAND;
+        const buffer = Utils.execute(command);
         const lines = buffer.toString().split('\n');
 
         lines.forEach((value, index, array) => {

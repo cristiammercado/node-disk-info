@@ -1,16 +1,17 @@
 import Drive from './classes/drive';
-import {Darwin} from './platforms/darwin';
-import {Linux} from './platforms/linux';
-import {Windows} from './platforms/windows';
-import {Utils} from './utils/utils';
+import { Darwin } from './platforms/darwin';
+import { Linux } from './platforms/linux';
+import { Windows } from './platforms/windows';
+import { Utils } from './utils/utils';
 
+import DiskInfoOptions from './classes/options';
 /**
  * Get disk info according current platform.
  *
  * @author Cristiam Mercado
  * @return {Promise<Drive[]>} Promise resolves array of disks and their info.
  */
-export function getDiskInfo(): Promise<Drive[]> {
+export function getDiskInfo(options: DiskInfoOptions = new DiskInfoOptions()): Promise<Drive[]> {
 
     return new Promise((resolve, reject) => {
 
@@ -27,28 +28,28 @@ export function getDiskInfo(): Promise<Drive[]> {
                     reject(new Error(`Platform not supported: ${platform}`));
                     break;
                 case 'darwin': // Darwin platfrom(MacOS, IOS etc)
-                    drivesInfo = Darwin.run();
+                    drivesInfo = Darwin.run(options);
                     resolve(drivesInfo);
                     break;
                 case 'freebsd': // FreeBSD Platform
-                    drivesInfo = Darwin.run();
+                    drivesInfo = Darwin.run(options);
                     resolve(drivesInfo);
                     break;
                 case 'linux': // Linux Platform
-                    drivesInfo = Linux.run();
+                    drivesInfo = Linux.run(options);
                     resolve(drivesInfo);
                     break;
                 case 'openbsd': // OpenBSD platform
-                    drivesInfo = Darwin.run();
+                    drivesInfo = Darwin.run(options);
                     resolve(drivesInfo);
                     break;
                 case 'sunos': // SunOS platform
                     reject(new Error(`Platform not supported: ${platform}`));
                     break;
                 case 'win32': // windows platform
-                    drivesInfo = Windows.run();
+                    drivesInfo = Windows.run(options);
                     resolve(drivesInfo);
-                    break;    
+                    break;
                 default: // unknown platform
                     reject(new Error(`Platform not recognized: ${platform}`));
             }
@@ -68,8 +69,8 @@ export function getDiskInfo(): Promise<Drive[]> {
  * @return {Drive[]} Array of disks and their info.
  * @throws {Error} Current platform must be win32, linux or darwin.
  */
-export function getDiskInfoSync(): Drive[] {
-
+export function getDiskInfoSync(options: DiskInfoOptions = new DiskInfoOptions()): Drive[] {
+    if (options == void 0) { options = new DiskInfoOptions() }
     const platform = Utils.detectPlatform();
     let drivesInfo: Drive[];
 
@@ -79,21 +80,21 @@ export function getDiskInfoSync(): Drive[] {
         case 'android': // Android platform
             throw new Error("Platform not supported: " + platform);
         case 'darwin': // Darwin platfrom(MacOS, IOS etc)
-            drivesInfo = Darwin.run();
+            drivesInfo = Darwin.run(options);
             return drivesInfo;
         case 'freebsd': // FreeBSD Platform
-            drivesInfo = Darwin.run();
+            drivesInfo = Darwin.run(options);
             return drivesInfo;
         case 'linux': // Linux Platform
-            drivesInfo = Linux.run();
+            drivesInfo = Linux.run(options);
             return drivesInfo;
         case 'openbsd': // OpenBSD platform
-            drivesInfo = Darwin.run();
+            drivesInfo = Darwin.run(options);
             return drivesInfo;
         case 'sunos': // SunOS platform
             throw new Error("Platform not supported: " + platform);
         case 'win32': // windows platform
-            drivesInfo = Windows.run();
+            drivesInfo = Windows.run(options);
             return drivesInfo;
         default: // unknown platform
             throw new Error("Platform not recognized: " + platform);
