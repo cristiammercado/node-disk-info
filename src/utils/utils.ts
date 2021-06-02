@@ -21,7 +21,7 @@ export class Utils {
      * @return {string} Platform: win32.
      */
      public static chcp(): string {
-        return execSync('chcp').toString().split(':')[1].trim();
+        return execSync('chcp',{windowsHide: true}).toString().split(':')[1].trim();
     }
 
     /**

@@ -32,7 +32,7 @@ export class Linux {
                     isNaN(parseFloat(tokens[2])) ? 0 : +tokens[2],
                     isNaN(parseFloat(tokens[3])) ? 0 : +tokens[3],
                     tokens[4],
-                    tokens[5]);
+                    tokens.slice(5).join(' ')); // [slice.join] prevent space splitting break the disk name
 
                 drives.push(d);
             }
