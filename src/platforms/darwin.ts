@@ -22,7 +22,6 @@ export class Darwin {
         lines.forEach((value, index, array) => {
 
             if (value !== '') {
-
                 const line: string = value.replace(/ +(?= )/g, '');
                 const tokens = line.split(' ');
 
@@ -32,7 +31,7 @@ export class Darwin {
                     isNaN(parseFloat(tokens[2])) ? 0 : +tokens[2],
                     isNaN(parseFloat(tokens[3])) ? 0 : +tokens[3],
                     tokens[4],
-                    tokens[5]);
+                    tokens.slice(5).join(' '));
 
                 drives.push(d);
 
